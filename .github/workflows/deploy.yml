@@ -27,6 +27,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
+      - name: Debug Repository
+        run: |
+          echo "Repository structure:"
+          ls -la
+          echo "Package.json content:"
+          cat package.json
+          
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -35,12 +42,39 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Check Vite Config
+        run: |
+          if [ -f "vite.config.js" ]; then
+            echo "Vite config exists:"
+            cat vite.config.js
+          else
+            echo "No vite.config.js found"
+            find . -name "*.config.js" | grep -v "node_modules"
+          fi
+      
       - name: Build
         run: npm run build
       
+      - name: Debug Build Output
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Directory contents after build:"
+          ls -la
+          echo "Build output directory:"
+          if [ -d "dist" ]; then
+            ls -la dist
+            echo "Files in dist:"
+            find dist -type f | sort
+          else
+            echo "dist directory not found"
+            echo "Looking for other potential build directories:"
+            find . -type d -name "*dist*" -o -name "build" -o -name "out" | grep -v "node_modules"
+          fi
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
