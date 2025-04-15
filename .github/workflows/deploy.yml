@@ -5,36 +5,16 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
 jobs:
-  # Single job that builds and deploys
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Debug Repository
-        run: |
-          echo "Repository structure:"
-          ls -la
-          echo "Package.json content:"
-          cat package.json
-          
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -42,44 +22,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Check Vite Config
-        run: |
-          if [ -f "vite.config.js" ]; then
-            echo "Vite config exists:"
-            cat vite.config.js
-          else
-            echo "No vite.config.js found"
-            find . -name "*.config.js" | grep -v "node_modules"
-          fi
-      
       - name: Build
         run: npm run build
-      
-      - name: Debug Build Output
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "Directory contents after build:"
-          ls -la
-          echo "Build output directory:"
-          if [ -d "dist" ]; then
-            ls -la dist
-            echo "Files in dist:"
-            find dist -type f | sort
-          else
-            echo "dist directory not found"
-            echo "Looking for other potential build directories:"
-            find . -type d -name "*dist*" -o -name "build" -o -name "out" | grep -v "node_modules"
-          fi
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
         
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # The folder the action should deploy
+          branch: gh-pages # The branch the action should deploy to
