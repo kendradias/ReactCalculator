@@ -9,13 +9,13 @@ Currently, two official plugins are available:
 
 # React Calculator
 
-[![Deploy to GitHub Pages](https://github.com/your-username/react-calculator/actions/workflows/deploy.yml/badge.svg)](https://github.com/kendradias/ReactCalculator/actions/workflows/deploy.yml)
+[![Deploy to GitHub Pages](https://github.com/kendradias/ReactCalculator/actions/workflows/deploy.yml/badge.svg)](https://github.com/kendradias/ReactCalculator/actions/workflows/deploy.yml)
 
 A React Native calculator application with Docker development environment and automated GitHub Pages deployment.
 
 ## Live Demo
 
-Visit the live application at: [https://your-username.github.io/react-calculator](https://kendradias.github.io/ReactCalculator)
+Visit the live application at: [https://kendradias.github.io/ReactCalculator](https://kendradias.github.io/ReactCalculator)
 
 
 ## Summary
