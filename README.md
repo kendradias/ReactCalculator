@@ -17,6 +17,13 @@ A React Native calculator application with Docker development environment and au
 
 Visit the live application at: [https://your-username.github.io/react-calculator](https://kendradias.github.io/ReactCalculator)
 
+
+## Summary
+
+I have implemented a CI/CD pipeline using Docker for local dev, and Github Actions for automated deployments to github pages. The development environment is containerized with Docker, using Node.js Apline image as suggested. This enables hot reloading, and docker-compose.yml allows for realtime code updates during development without requiring a container rebuild. 
+
+For deployment, I decided to go with JamesIves/gitub-pages-deploy-action instead of GitHub native Pages - I was running into artifact handling issues and could not figure out what I was missing. It creates a dedicated gh-pages branch containing the built application which is then served by github.
+
 ## Technology Stack
 
 - React
@@ -69,11 +76,19 @@ Visit the live application at: [https://your-username.github.io/react-calculator
 ## Deployment
 
 The application is automatically deployed to GitHub Pages using GitHub Actions whenever changes are pushed to the main branch.
+This project uses the JamesIves/github-pages-deploy-action, a reliable third-party action for GitHub Pages deployments. The workflow:
+
+Builds the React application
+Deploys the build output to the gh-pages branch
+GitHub Pages serves the content from this branch
 
 To manually trigger a deployment:
-1. Go to the Actions tab in your GitHub repository
-2. Select the "Deploy to GitHub Pages" workflow
-3. Click "Run workflow"
+
+Go to the Actions tab in your GitHub repository
+Select the "Deploy to GitHub Pages" workflow
+Click "Run workflow"
+
+Note: After initial setup, ensure GitHub Pages settings are configured to deploy from the gh-pages branch.
 
 ## Configuration Details
 
